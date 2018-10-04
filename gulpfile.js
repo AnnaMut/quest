@@ -5,6 +5,8 @@ const server = require(`browser-sync`).create();
 const imagemin = require(`gulp-imagemin`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
+const mocha = require(`gulp-mocha`);              
+const commonjs = require(`rollup-plugin-commonjs`);
 
 gulp.task(`style`, () => {
   return gulp.src(`css/style.css`).
@@ -80,4 +82,14 @@ gulp.task(`build`, [`assemble`], () => {
 });
 
 gulp.task(`test`, () => {
+    gulp
+    .src([`js/**/*.test.js`])
+    .pipe(rollup({
+      plugins: [
+        commonjs()           // Сообщает Rollup, что модули можно загружать из node_modules
+      ]}, `cjs`))            // Выходной формат тестов — `CommonJS` модуль
+    .pipe(gulp.dest(`build/test`))
+    .pipe(mocha({
+      reporter: `spec`       // Вид в котором я хочу отображать результаты тестирования
+    }));
 });
