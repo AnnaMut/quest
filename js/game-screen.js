@@ -1,16 +1,8 @@
 import {changeScreen, render} from './utils';
+import { initialState } from './data/data';
 
-const template =  `<div>
-  <header class="header">
-    <div>Мир: 0</div>
-    <div>Жизни: <span class="heart__full">♥</span>
-      <span class="heart__full">♥</span>
-      <span class="heart__full">♥</span>
-    </div>
-    <div>Время: 7</div>
-  </header>
-</div>
-<div>
+
+const template =  `
   <div class="quest">
     <p class="text">Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия —
       спасти принцессу
@@ -27,12 +19,20 @@ const template =  `<div>
       <li class="answer">JUMP. Вы прыгнете вверх</li>
     </ul>
   </div>
-</div>
-<div>
   <div class="result"></div>
   <small>Для справки введите <i>help</i></small>
-</div>`;
+`;
 
 const element = render(template);
+
+const input = element.querySelector(`input`);
+input.onkeydown = (evt) => {
+  if (evt.key === `Enter`) {
+    // Переход на следующий экран
+    input.reset();
+  }
+};
+
+input.focus();
 
 export default element;

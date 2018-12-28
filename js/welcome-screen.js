@@ -1,5 +1,7 @@
 import {changeScreen, render} from './utils';
 import gameScreen from './game-screen';
+import headerTemplate from './header';
+import { initialState } from './data/data';
 
 const template = `
 <div class="end">
@@ -21,6 +23,7 @@ const agreeButton = element.querySelector(`.agree-button`);
 
 agreeButton.addEventListener(`click`, () => {
   changeScreen(gameScreen);
+  document.querySelector(`.quest`).appendChild(render(headerTemplate(initialState)));
 });
 
 export default element;
